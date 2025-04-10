@@ -1,6 +1,3 @@
-Notes on Ingress and Egress in Kubernetes
-
-
 1. What is Ingress in Kubernetes?
 
 - Ingress is an API object in Kubernetes that manages external access to services within a cluster, typically via HTTP and HTTPS.
