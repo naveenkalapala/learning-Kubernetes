@@ -46,7 +46,7 @@ spec:
   clusterIP: None 
 ---
 apiVersion: v1
-kind: Secret
+kind: Secret  
 metadata:
   name: mongodb-secret
 type: Opaque
