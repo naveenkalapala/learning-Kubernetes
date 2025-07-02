@@ -37,22 +37,23 @@ By default, containers are **ephemeral**: once a container crashes or restarts, 
 **Example:**
 
 
+```
 apiVersion: v1
 kind: Pod
 metadata:
   name: emptydir-example
 spec:
   containers:
-  - name: app
-    image: busybox
-    command: ["sleep", "3600"]
-    volumeMounts:
-    - mountPath: /data
-      name: temp-storage
+    - name: app
+      image: busybox
+      command: ["sleep", "3600"]
+      volumeMounts:
+        - mountPath: /data
+          name: temp-storage
   volumes:
-  - name: temp-storage
-    emptyDir: {}
-```
+    - name: temp-storage
+      emptyDir: {}
+
 
 ---
 
