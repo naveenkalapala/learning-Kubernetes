@@ -95,6 +95,7 @@ spec:
 PVC Definition:
 
 ---
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -106,10 +107,11 @@ spec:
     requests:
       storage: 1Gi
 
-```
+---
 
 Pod Using PVC:
 
+---
 
 volumes:
 - name: my-storage
@@ -119,9 +121,9 @@ volumes:
 volumeMounts:
 - name: my-storage
   mountPath: /data
-```
 
 ---
+
 
 4️⃣ `configMap` & `secret`
 
@@ -131,6 +133,7 @@ volumeMounts:
 
 `configMap` Example
 
+---
 
 apiVersion: v1
 kind: ConfigMap
@@ -141,11 +144,12 @@ data:
     {
       "debug": true
     }
-```
+
+---
 
 Mounting in Pod:
 
-
+---
 volumes:
 - name: config-volume
   configMap:
@@ -157,7 +161,7 @@ volumeMounts:
 ```
 
 `secret` Example
-
+---
 
 apiVersion: v1
 kind: Secret
@@ -167,10 +171,12 @@ type: Opaque
 data:
   username: YWRtaW4=   # base64 for 'admin'
   password: cGFzc3dvcmQ=  # base64 for 'password'
-```
+
+---
 
 Mounting in Pod:
 
+---
 
 volumes:
 - name: secret-volume
@@ -180,6 +186,7 @@ volumes:
 volumeMounts:
 - name: secret-volume
   mountPath: /etc/secret
+
 ```
 
 ---
@@ -191,6 +198,7 @@ volumeMounts:
 
 Example with AWS EBS:
 
+---
 
 apiVersion: v1
 kind: Pod
@@ -209,9 +217,8 @@ spec:
     awsElasticBlockStore:
       volumeID: vol-0abcdef1234567890
       fsType: ext4
-```
 
----
+```
 
 🔄 How Volumes Work with Pods
 
@@ -219,7 +226,7 @@ Volumes are declared under the `volumes` section and mounted into containers via
 
 Example:
 
-
+---
 apiVersion: v1
 kind: Pod
 metadata:
