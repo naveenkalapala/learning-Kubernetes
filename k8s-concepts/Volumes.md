@@ -1,16 +1,16 @@
 What is a Volume in Kubernetes?
 
-In Kubernetes, a **Volume** is a directory accessible to containers in a Pod. It enables containers to store and share data persistently—even beyond the lifecycle of an individual container.
+In Kubernetes, a Volume is a directory accessible to containers in a Pod. It enables containers to store and share data persistently—even beyond the lifecycle of an individual container.
 
-By default, containers are **ephemeral**: once a container crashes or restarts, its data is lost. **Volumes solve this problem**.
+By default, containers are ephemeral: once a container crashes or restarts, its data is lost. Volumes solve this problem.
 
 ---
 
 🔹 Key Features of Volumes
 
-* **Persistence**: Data stored in a volume can outlive the container.
-* **Sharing**: Multiple containers in the same Pod can share the same volume.
-* **Multiple Types**: Kubernetes supports various volume types (`emptyDir`, `hostPath`, `persistentVolumeClaim`, etc.)
+* Persistence: Data stored in a volume can outlive the container.
+* Sharing: Multiple containers in the same Pod can share the same volume.
+* Multiple Types: Kubernetes supports various volume types (`emptyDir`, `hostPath`, `persistentVolumeClaim`, etc.)
 
 ---
 
@@ -30,11 +30,11 @@ By default, containers are **ephemeral**: once a container crashes or restarts, 
 
 1️⃣ `emptyDir`
 
-* **Description**: A temporary directory created when a Pod is assigned to a node.
-* **Lifecycle**: Exists as long as the Pod exists. Data is lost if the Pod is deleted.
-* **Use Case**: Temporary scratch space, caching, or inter-container communication.
+* Description: A temporary directory created when a Pod is assigned to a node.
+* Lifecycle: Exists as long as the Pod exists. Data is lost if the Pod is deleted.
+* Use Case: Temporary scratch space, caching, or inter-container communication.
 
-**Example:**
+Example:
 
 
 ```
@@ -59,10 +59,10 @@ spec:
 
 2️⃣ `hostPath`
 
-* **Description**: Mounts a file or directory from the **host node’s filesystem** into the Pod.
-* ⚠️ **Not recommended** for production (can be insecure and node-dependent).
+* Description: Mounts a file or directory from the host node’s filesystem into the Pod.
+* ⚠️ Not recommended for production (can be insecure and node-dependent).
 
-**Example:**
+Example:
 
 
 apiVersion: v1
@@ -88,13 +88,13 @@ spec:
 
 3️⃣ `persistentVolumeClaim (PVC)`
 
-* **Description**: Abstracts persistent storage provisioning.
-* **Works With**: `PersistentVolume` (PV) backed by cloud block storage, NFS, etc.
-* **Use Case**: Long-term storage that survives Pod restarts.
+* Description: Abstracts persistent storage provisioning.
+* Works With: `PersistentVolume` (PV) backed by cloud block storage, NFS, etc.
+* Use Case: Long-term storage that survives Pod restarts.
 
-**PVC Definition:**
+PVC Definition:
 
-
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -105,9 +105,10 @@ spec:
   resources:
     requests:
       storage: 1Gi
+
 ```
 
-**Pod Using PVC:**
+Pod Using PVC:
 
 
 volumes:
@@ -124,9 +125,9 @@ volumeMounts:
 
 4️⃣ `configMap` & `secret`
 
-* **Purpose**: Inject configuration or sensitive data into Pods as files.
-* **configMap**: Non-sensitive settings (e.g., app config).
-* **secret**: Sensitive data (e.g., API keys, passwords).
+* Purpose: Inject configuration or sensitive data into Pods as files.
+* configMap: Non-sensitive settings (e.g., app config).
+* secret: Sensitive data (e.g., API keys, passwords).
 
 `configMap` Example
 
@@ -142,7 +143,7 @@ data:
     }
 ```
 
-**Mounting in Pod:**
+Mounting in Pod:
 
 
 volumes:
@@ -168,7 +169,7 @@ data:
   password: cGFzc3dvcmQ=  # base64 for 'password'
 ```
 
-**Mounting in Pod:**
+Mounting in Pod:
 
 
 volumes:
@@ -185,10 +186,10 @@ volumeMounts:
 
 5️⃣ Cloud/Network Volumes (`nfs`, `awsElasticBlockStore`, etc.)
 
-* **Description**: Integrate external persistent storage solutions.
-* **Use Case**: Cloud-native workloads requiring scalable and durable storage.
+* Description: Integrate external persistent storage solutions.
+* Use Case: Cloud-native workloads requiring scalable and durable storage.
 
-**Example with AWS EBS:**
+Example with AWS EBS:
 
 
 apiVersion: v1
@@ -216,7 +217,7 @@ spec:
 
 Volumes are declared under the `volumes` section and mounted into containers via `volumeMounts`.
 
-**Example:**
+Example:
 
 
 apiVersion: v1
