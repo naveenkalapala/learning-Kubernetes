@@ -1,0 +1,19 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: voting-app
+  region: us-east-1
+  version: "1.31"  # eksctl 0.197+ maps 1.31 to the latest 1.31.x AMI
+
+managedNodeGroups:
+  - name: voting-ng
+    instanceType: t2.medium
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 3
+    volumeSize: 20
+    iam:
+      instanceRoleARN: arn:aws:iam::<YOUR-ACCOUNT-ID>:role/my-eks-node-role
+    ssh:
+      allow: true
