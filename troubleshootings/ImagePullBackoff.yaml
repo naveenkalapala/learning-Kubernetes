@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind : Deployment
+metadata:
+  name: imagepull-deployment-v1
+  namespace: default
+  labels:
+    app: imagepull
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: imagepull
+  template:
+    metadata:
+      labels:
+        app: imagepull
+    spec:
+      containers:
+      - name: imagepull-container
+        image: nkalapala/simple-flask:v1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: imagepull-service-v1
+  namespace: default
+spec:
+  selector:
+    app: imagepull
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
