@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oomkilled-deployment
+  namespace: default
+  labels:
+    app: oomkilled
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: oomkilled
+  template:
+    metadata:
+      labels:
+        app: oomkilled
+    spec:
+      containers:
+      - name: oomkilled-container
+        image: polinux/stress
+        resources:
+          limits:
+            memory: "64Mi"
+        command: ["stress"]
+        args: ["--vm", "1", "--vm-bytes", "200M", "--vm-hang", "1"]
+        ports:
+        - containerPort: 8000
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: oomkilled-service
+  namespace: default
+spec:
+  selector:
+    app: oomkilled
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
