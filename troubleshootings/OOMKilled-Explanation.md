@@ -189,4 +189,3 @@ Apply and monitor.
 ## Summary (One-Line Explanation)
 
 > `OOMKilled` occurs when a container’s memory usage exceeds its cgroup limit and the Linux Out-Of-Memory killer terminates the process with SIGKILL (exit code 137).
-````
