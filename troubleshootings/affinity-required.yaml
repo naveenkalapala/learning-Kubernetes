@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: affinity-required-deployment
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: affinity-required
+  template:
+    metadata:
+      labels:
+        app: affinity-required
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-type
+                    operator: In
+                    values:
+                      - arm
+      containers:
+        - name: affinity-required-container
+          image: nginx:1.14-alpine
+          ports:
+            - containerPort: 8000
