@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-pvc
+  namespace: default
+  labels:
+    app: statefulset-pvc
+
+spec:
+  replicas: 3
+  serviceName: statefulset-pvc-service
+  selector:
+    matchLabels:
+      app: statefulset-pvc
+  volumeClaimTemplates:
+    - metadata:
+        name: statefulset-pvc-volume
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: "ebs"
+        resources:
+          requests:
+            storage: 1Gi
+  template:
+    metadata:
+      labels:
+        app: statefulset-pvc
+    spec:
+      containers:
+        - name: statefulset-pvc-container
+          image: nginx:1.14-alpine
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          volumeMounts:
+            - name: statefulset-pvc-volume
+              mountPath: /var/www/html
+              readOnly: false
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: statefulset-pvc-service
+  namespace: default
+  labels:
+    app: statefulset-pvc
+spec:
+  selector:
+    app: statefulset-pvc
+  ports:
+    - port: 80
+
+
+
+
+
+
+
+              
